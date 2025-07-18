@@ -2,33 +2,54 @@
 
 import { useEffect, useState } from 'react';
 import api from '@/lib/axios';
-import axios from 'axios';
 
 export default function TechTeamComponent() {
   const [members, setMembers] = useState([]);
+  const [projects, setProjects] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [editingId, setEditingId] = useState(null);
   const [formData, setFormData] = useState({
     name: '',
     roll: '',
     email: '',
+    project: '',
   });
 
   useEffect(() => {
     fetchMembers();
+    fetchProjects();
   }, []);
 
   const fetchMembers = async () => {
     try {
       const res = await api.get('techteam/');
       setMembers(res.data);
-    } catch (error) {
-      console.error('Fetch error:', error);
+    } catch (err) {
+      console.error('Fetch members error:', err);
+    }
+  };
+
+  const fetchProjects = async () => {
+    try {
+      const res = await api.get('projects/');
+      setProjects(res.data);
+    } catch (err) {
+      console.error('Fetch projects error:', err);
+    }
+  };
+
+  const handleDelete = async (id) => {
+    if (!confirm('Are you sure you want to delete this team member?')) return;
+    try {
+      await api.delete(`techteam/${id}/`);
+      fetchMembers();
+    } catch (err) {
+      console.error('Delete error:', err);
     }
   };
 
   const openAddModal = () => {
-    setFormData({ name: '', roll: '', email: '' });
+    setFormData({ name: '', roll: '', email: '', project: '' });
     setEditingId(null);
     setShowModal(true);
   };
@@ -38,6 +59,7 @@ export default function TechTeamComponent() {
       name: member.name,
       roll: member.roll,
       email: member.email,
+      project: member.project, 
     });
     setEditingId(member.member_id);
     setShowModal(true);
@@ -46,34 +68,30 @@ export default function TechTeamComponent() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      const payload = {
+        ...formData,
+        project: parseInt(formData.project),
+      };
+
       if (editingId) {
-        await api.put(`techteam/${editingId}/`, formData);
+        await api.put(`techteam/${editingId}/`, payload);
       } else {
-        await api.post('techteam/', formData);
+        await api.post('techteam/', payload);
       }
       setShowModal(false);
       fetchMembers();
+      setFormData({ name: '', roll: '', email: '', project: '' });
+      setEditingId(null);
     } catch (err) {
-      console.error('Submit error:', err);
-    }
-  };
-
-  const handleDelete = async (id) => {
-    if (!confirm('Are you sure you want to delete this member?')) return;
-    try {
-      await api.delete(`techteam/${id}/`);
-      fetchMembers();
-    } catch (err) {
-      console.error('Delete error:', err);
+      console.error('Submit error:', err.response?.data || err.message);
     }
   };
 
   return (
     <div className="p-8 bg-gray-100 min-h-screen">
-      <h1 className="text-3xl font-bold mb-8 text-center text-blue-800">👨‍💻 Tech Team Members</h1>
+      <h1 className="text-3xl font-bold mb-6 text-center text-blue-800">👨‍💻 Tech Team Members</h1>
 
-      {/* Add Button */}
-      <div className="flex justify-end max-w-4xl mx-auto mb-4">
+      <div className="flex justify-end max-w-5xl mx-auto mb-4">
         <button
           onClick={openAddModal}
           className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
@@ -92,6 +110,7 @@ export default function TechTeamComponent() {
             <form onSubmit={handleSubmit} className="space-y-4">
               <input
                 type="text"
+                name="name"
                 placeholder="Name"
                 className="w-full border p-2 rounded text-black"
                 value={formData.name}
@@ -100,6 +119,7 @@ export default function TechTeamComponent() {
               />
               <input
                 type="text"
+                name="roll"
                 placeholder="Role"
                 className="w-full border p-2 rounded text-black"
                 value={formData.roll}
@@ -108,12 +128,28 @@ export default function TechTeamComponent() {
               />
               <input
                 type="email"
+                name="email"
                 placeholder="Email"
                 className="w-full border p-2 rounded text-black"
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 required
               />
+              <select
+                name="project"
+                className="w-full border p-2 rounded text-black"
+                value={formData.project}
+                onChange={(e) => setFormData({ ...formData, project: e.target.value })}
+                required
+              >
+                <option value="">Select Project</option>
+                {projects.map((project) => (
+                  <option key={project.project_id} value={project.project_id}>
+                    {project.name}
+                  </option>
+                ))}
+              </select>
+
               <div className="flex justify-between pt-4">
                 <button
                   type="button"
@@ -135,38 +171,40 @@ export default function TechTeamComponent() {
       )}
 
       {/* Table */}
-      <div className="overflow-x-auto max-w-4xl mx-auto">
+      <div className="overflow-x-auto max-w-5xl mx-auto">
         <table className="min-w-full bg-white shadow-xl rounded-xl border border-gray-300">
           <thead className="bg-blue-100 text-blue-800 text-sm uppercase rounded-t-xl">
             <tr>
-              <th className="px-6 py-3 border-b rounded-tl-xl">ID</th>
+              <th className="px-6 py-3 border-b">ID</th>
               <th className="px-6 py-3 border-b">Name</th>
               <th className="px-6 py-3 border-b">Role</th>
               <th className="px-6 py-3 border-b">Email</th>
-              <th className="px-6 py-3 border-b rounded-tr-xl text-center">Actions</th>
+              <th className="px-6 py-3 border-b">Project</th>
+              <th className="px-6 py-3 border-b text-center">Actions</th>
             </tr>
           </thead>
           <tbody>
-            {members.map((member, idx) => (
+            {members.map((m, idx) => (
               <tr
-                key={member.member_id}
+                key={m.member_id}
                 className={`${
                   idx % 2 === 0 ? 'bg-white' : 'bg-gray-50'
                 } text-gray-800 hover:bg-blue-50 transition duration-150 ease-in-out`}
               >
-                <td className="px-6 py-4 border-b text-center">{member.member_id}</td>
-                <td className="px-6 py-4 border-b">{member.name}</td>
-                <td className="px-6 py-4 border-b">{member.roll}</td>
-                <td className="px-6 py-4 border-b">{member.email}</td>
+                <td className="px-6 py-4 border-b text-center">{m.member_id}</td>
+                <td className="px-6 py-4 border-b">{m.name}</td>
+                <td className="px-6 py-4 border-b">{m.roll}</td>
+                <td className="px-6 py-4 border-b">{m.email}</td>
+                <td className="px-6 py-4 border-b text-center">{m.project}</td>
                 <td className="px-6 py-4 border-b text-center">
                   <button
-                    onClick={() => openEditModal(member)}
+                    onClick={() => openEditModal(m)}
                     className="bg-yellow-500 text-white px-3 py-1 rounded mr-2 hover:bg-yellow-600"
                   >
                     Edit
                   </button>
                   <button
-                    onClick={() => handleDelete(member.member_id)}
+                    onClick={() => handleDelete(m.member_id)}
                     className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700"
                   >
                     Delete
