@@ -78,7 +78,7 @@ class ManagerRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Manager.objects.all()
     serializer_class = ManagerSerializer
     permission_classes = [permissions.IsAuthenticated]
-    lookup_field = 'id'
+
 
 class ClientListCreateView(generics.ListCreateAPIView):
     queryset = Client.objects.all()
@@ -90,7 +90,7 @@ class ClientRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Client.objects.all()
     serializer_class = ClientSerializer
     permission_classes = [permissions.IsAuthenticated]
-    lookup_field = 'id'
+
 
 class ProjectListCreateView(generics.ListCreateAPIView):
     queryset = Project.objects.all()
@@ -102,7 +102,7 @@ class ProjectRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
     permission_classes = [permissions.IsAuthenticated]
-    lookup_field = 'id'
+
 
 class TechTeamListCreateView(generics.ListCreateAPIView):
     queryset = TechTeam.objects.all()
@@ -114,7 +114,7 @@ class TechTeamRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     queryset = TechTeam.objects.all()
     serializer_class = TechTeamSerializer
     permission_classes = [permissions.IsAuthenticated]
-    lookup_field = 'id'
+  
 
 
 class FeedbackListCreateView(generics.ListCreateAPIView):
@@ -127,4 +127,4 @@ class FeedbackRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Feedback.objects.all()
     serializer_class = FeedbackSerializer
     permission_classes = [permissions.IsAuthenticated]
-    lookup_field = 'id'
+    

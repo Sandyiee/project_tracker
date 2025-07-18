@@ -58,7 +58,7 @@ The backend supports **two authentication methods**:
 ```json
 {
   "message": "Clients retrieved successfully.",
-  "data": [{ ... }]
+  "data": [{ "name": "string", "company": "string", "email": "string" }]
 }
 ```
 **Failure (500 Internal Server Error):**
@@ -98,7 +98,7 @@ curl -X POST http://localhost:8000/api/clients/ \
 ```json
 {
   "message": "Clients fetched successfully.",
-  "data": { ... }
+  "data": { "name": "Divya", "company": "Wonder Solutions", "email": "divya@gmail.com" }
 }
 ```
 **Failure (404 Not Found):**
@@ -117,7 +117,10 @@ curl -X GET http://localhost:8000/api/clients/1/
 
 **Success (200 OK):**
 ```json
-{ "message": "Clients updated successfully." }
+{
+"message": "Clients updated successfully."
+ "data": { "name": "Divyaa", "company": "Wonder Solutions", "email": "divya@gmail.com" } 
+ }
 ```
 **Failure (400 Bad Request):**
 ```json
@@ -159,7 +162,7 @@ curl -X DELETE http://localhost:8000/api/clients/1/
 ```json
 {
   "message": "Projects retrieved successfully.",
-  "data": [{ ... }]
+  "data": {"title": "string", "description": "string", "status": "string", "start_date": "Date", "end_date": "Date", "client": int, "manager": int }
 }
 ```
 **Failure (500 Internal Server Error):**
@@ -199,7 +202,7 @@ curl -X POST http://localhost:8000/api/projects/ \
 ```json
 {
   "message": "Projects fetched successfully.",
-  "data": { ... }
+  "data": { "title": "string", "description": "string", "status": "string", "start_date": "Date", "end_date": "Date", "client": int, "manager": int  }
 }
 ```
 **Failure (404 Not Found):**
@@ -218,7 +221,10 @@ curl -X GET http://localhost:8000/api/projects/1/
 
 **Success (200 OK):**
 ```json
-{ "message": "Projects updated successfully." }
+{ 
+  "message": "Projects updated successfully."
+  "data": {"title": "string", "description": "string", "status": "string", "start_date": "Date", "end_date": "Date", "client": int, "manager": int  }
+}
 ```
 **Failure (400 Bad Request):**
 ```json
@@ -260,7 +266,7 @@ curl -X DELETE http://localhost:8000/api/projects/1/
 ```json
 {
   "message": "Managers retrieved successfully.",
-  "data": [{ ... }]
+  "data": { "name": "string", "email": "string", "department": "String" }
 }
 ```
 **Failure (500 Internal Server Error):**
@@ -300,7 +306,7 @@ curl -X POST http://localhost:8000/api/managers/ \
 ```json
 {
   "message": "Managers fetched successfully.",
-  "data": { ... }
+  "data": {  "name": "string", "email": "string", "department": "String"}
 }
 ```
 **Failure (404 Not Found):**
@@ -319,7 +325,10 @@ curl -X GET http://localhost:8000/api/managers/1/
 
 **Success (200 OK):**
 ```json
-{ "message": "Managers updated successfully." }
+{ 
+  "message": "Managers updated successfully." 
+  "data" :{ "name": "Alice", "email": "alice@gmail.com", "department": "Engineering" }
+  }
 ```
 **Failure (400 Bad Request):**
 ```json
@@ -361,7 +370,7 @@ curl -X DELETE http://localhost:8000/api/managers/1/
 ```json
 {
   "message": "Tech Team retrieved successfully.",
-  "data": [{ ... }]
+  "data": { "name": "String", "roll": "string", "email": "string", "project": int }
 }
 ```
 **Failure (500 Internal Server Error):**
@@ -401,7 +410,7 @@ curl -X POST http://localhost:8000/api/techteam/ \
 ```json
 {
   "message": "Tech Team fetched successfully.",
-  "data": { ... }
+  "data": { "name": "String", "roll": "string", "email": "string", "project": int }
 }
 ```
 **Failure (404 Not Found):**
@@ -420,7 +429,9 @@ curl -X GET http://localhost:8000/api/techteam/1/
 
 **Success (200 OK):**
 ```json
-{ "message": "Tech Team updated successfully." }
+{ "message": "Tech Team updated successfully."
+   "data": { "name": "String", "roll": "string", "email": "string", "project": int }
+    }
 ```
 **Failure (400 Bad Request):**
 ```json
@@ -462,7 +473,7 @@ curl -X DELETE http://localhost:8000/api/techteam/1/
 ```json
 {
   "message": "Feedback retrieved successfully.",
-  "data": [{ ... }]
+  "data": { "comments": "string", "ratings": int, "project": int, "client": int  }
 }
 ```
 **Failure (500 Internal Server Error):**
@@ -502,7 +513,7 @@ curl -X POST http://localhost:8000/api/feedback/ \
 ```json
 {
   "message": "Feedback fetched successfully.",
-  "data": { ... }
+  "data": { "comments": "string", "ratings": int, "project": int, "client": int }
 }
 ```
 **Failure (404 Not Found):**
@@ -521,7 +532,9 @@ curl -X GET http://localhost:8000/api/feedback/1/
 
 **Success (200 OK):**
 ```json
-{ "message": "Feedback updated successfully." }
+{ "message": "Feedback updated successfully."
+   "data" :{ "comments": "Great service", "ratings": 5, "project": 2, "client": 2 }
+    }
 ```
 **Failure (400 Bad Request):**
 ```json

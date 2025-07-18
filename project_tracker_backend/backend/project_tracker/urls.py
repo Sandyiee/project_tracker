@@ -14,17 +14,17 @@ urlpatterns = [
     path('login/', UsernamePasswordLoginView.as_view(), name='username-password-login'),
 
     path('managers/', ManagerListCreateView.as_view(), name='manager-list'),
-    path('managers/<int:id>/', ManagerRetrieveUpdateDestroyView.as_view(), name='manager-detail'),
+    path('managers/<int:pk>/', ManagerRetrieveUpdateDestroyView.as_view(), name='manager-detail'),
 
     path('clients/', ClientListCreateView.as_view(), name='client-list'),
-    path('clients/<int:id>/', ClientRetrieveUpdateDestroyView.as_view(), name='client-detail'),
+    path('clients/<int:pk>/', ClientRetrieveUpdateDestroyView.as_view(), name='client-detail'),
 
     path('projects/', ProjectListCreateView.as_view(), name='project-list'),
-    path('projects/<int:id>/', ProjectRetrieveUpdateDestroyView.as_view(), name='project-detail'),
+    path('projects/<int:pk>/', ProjectRetrieveUpdateDestroyView.as_view(), name='project-detail'),
 
     path('techteam/', TechTeamListCreateView.as_view(), name='techteam-list'),
-    path('techteam/<int:id>/', TechTeamRetrieveUpdateDestroyView.as_view(), name='techteam-detail'),
+    path('techteam/<int:pk>/', TechTeamRetrieveUpdateDestroyView.as_view(), name='techteam-detail'),
 
     path('feedback/', FeedbackListCreateView.as_view(), name='feedback-list'),
-    path('feedback/<int:id>/', FeedbackRetrieveUpdateDestroyView.as_view(), name='feedback-detail'),
+    path('feedback/<int:pk>/', FeedbackRetrieveUpdateDestroyView.as_view(), name='feedback-detail'),
 ]
