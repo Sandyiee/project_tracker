@@ -19,9 +19,8 @@ local_settings.py
 **/migrations/
 !**/migrations/__init__.py
 
-# Firebase Admin SDK
-**/firebase-adminsdk.json
 
+**/.env
 #  VSCode / IDE
 
 .vscode/

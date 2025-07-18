@@ -11,7 +11,7 @@ export default function LoginModal({ setUser, setShowModal }) {
   const handleUsernameLogin = async (e) => {
     e.preventDefault();
     try {
-      await api.post('username-login/', formData, { withCredentials: true });
+      await api.post('login/', formData, { withCredentials: true });
       setUser(true);
       setShowModal(false);
     } catch (err) {
@@ -24,7 +24,7 @@ export default function LoginModal({ setUser, setShowModal }) {
     try {
       const result = await signInWithPopup(auth, provider);
       const token = await result.user.getIdToken(true);
-      await api.post('verify-token/', { token }, { withCredentials: true });
+      await api.post('login/firebase/', { token }, { withCredentials: true });
       setUser(result.user);
       setShowModal(false);
     } catch (err) {

@@ -1,30 +1,30 @@
 from django.urls import path
 from .views import (
-    FixedUserCreate,
-    ManagerList, ManagerDetail,
-    ClientList, ClientDetail,
-    ProjectList, ProjectDetail,
-    TechTeamList, TechTeamDetail,
-    FeedbackList, FeedbackDetail,
-    verify_firebase_token,username_password_login
+    FirebaseLoginView, UsernamePasswordLoginView,
+    ManagerListCreateView, ManagerRetrieveUpdateDestroyView,
+    ClientListCreateView, ClientRetrieveUpdateDestroyView,
+    ProjectListCreateView, ProjectRetrieveUpdateDestroyView,
+    TechTeamListCreateView, TechTeamRetrieveUpdateDestroyView,
+    FeedbackListCreateView, FeedbackRetrieveUpdateDestroyView,
 )
+
 urlpatterns = [
-    path('register/', FixedUserCreate.as_view(), name='register'),
-    path('verify-token/', verify_firebase_token, name='verify-firebase-token'),
-    path('username-login/', username_password_login,name='username_password_login'),
 
-    path('managers/', ManagerList.as_view(), name='manager-list'),
-    path('managers/<int:pk>/', ManagerDetail.as_view(), name='manager-detail'),
+    path('login/firebase/', FirebaseLoginView.as_view(), name='firebase-login'),
+    path('login/', UsernamePasswordLoginView.as_view(), name='username-password-login'),
 
-    path('clients/', ClientList.as_view(), name='client-list'),
-    path('clients/<int:pk>/', ClientDetail.as_view(), name='client-detail'),
+    path('managers/', ManagerListCreateView.as_view(), name='manager-list'),
+    path('managers/<int:id>/', ManagerRetrieveUpdateDestroyView.as_view(), name='manager-detail'),
 
-    path('projects/', ProjectList.as_view(), name='project-list'),
-    path('projects/<int:pk>/', ProjectDetail.as_view(), name='project-detail'),
+    path('clients/', ClientListCreateView.as_view(), name='client-list'),
+    path('clients/<int:id>/', ClientRetrieveUpdateDestroyView.as_view(), name='client-detail'),
 
-    path('techteam/', TechTeamList.as_view(), name='techteam-list'),
-    path('techteam/<int:pk>/', TechTeamDetail.as_view(), name='techteam-detail'),
+    path('projects/', ProjectListCreateView.as_view(), name='project-list'),
+    path('projects/<int:id>/', ProjectRetrieveUpdateDestroyView.as_view(), name='project-detail'),
 
-    path('feedback/', FeedbackList.as_view(), name='feedback-list'),
-    path('feedback/<int:pk>/', FeedbackDetail.as_view(), name='feedback-detail'),
+    path('techteam/', TechTeamListCreateView.as_view(), name='techteam-list'),
+    path('techteam/<int:id>/', TechTeamRetrieveUpdateDestroyView.as_view(), name='techteam-detail'),
+
+    path('feedback/', FeedbackListCreateView.as_view(), name='feedback-list'),
+    path('feedback/<int:id>/', FeedbackRetrieveUpdateDestroyView.as_view(), name='feedback-detail'),
 ]
