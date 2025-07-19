@@ -59,7 +59,7 @@ export default function TechTeamComponent() {
       name: member.name,
       roll: member.roll,
       email: member.email,
-      project: member.project, 
+      project: member.project,
     });
     setEditingId(member.member_id);
     setShowModal(true);
@@ -135,20 +135,29 @@ export default function TechTeamComponent() {
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 required
               />
-              <select
+
+              {/* Replaced Dropdown with Textbox */}
+              <input
+                type="number"
                 name="project"
+                placeholder="Enter Project ID"
                 className="w-full border p-2 rounded text-black"
                 value={formData.project}
                 onChange={(e) => setFormData({ ...formData, project: e.target.value })}
                 required
-              >
-                <option value="">Select Project</option>
-                {projects.map((project) => (
-                  <option key={project.project_id} value={project.project_id}>
-                    {project.name}
-                  </option>
-                ))}
-              </select>
+              />
+
+              {/* Project Reference Display */}
+              <div className="text-sm text-gray-600 mt-1">
+                <p className="font-medium text-gray-700 mb-1">Available Project IDs:</p>
+                <ul className="list-disc list-inside space-y-1">
+                  {projects.map((project) => (
+                    <li key={project.project_id}>
+                      {project.project_id}: {project.name}
+                    </li>
+                  ))}
+                </ul>
+              </div>
 
               <div className="flex justify-between pt-4">
                 <button
