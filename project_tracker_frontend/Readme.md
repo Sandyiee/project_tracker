@@ -76,7 +76,7 @@ frontend/
 | `app/project/page.js`         | Protected route that renders `ProjectComponent.jsx` for submitting and viewing project data  |
 | `app/techteam/page.js`        | Protected route that renders `TechTeamComponent.jsx` for submitting and viewing techtem data |
 | `app/manager/page.js`         | Protected route that renders `ManageComponent.jsx` for submitting and viewing manager data    |
-| `app/feedback/page.js`        | PProtected route that renders `FeedbackComponent.jsx` for submitting and viewing feedback  data  |
+| `app/feedback/page.js`        | Protected route that renders `FeedbackComponent.jsx` for submitting and viewing feedback  data  |
 | `app/about/page.js`           | Static About page                             |
 | `components/LoginModel.jsx`        |  Modal for logging in via Google (Firebase) or username/password (API); sets user state |
 | `components/ProjectComponent.jsx` | Handles displaying, adding, editing, and deleting projects using a modal form and table UI |
